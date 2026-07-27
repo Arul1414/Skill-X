@@ -1,0 +1,5 @@
+{
+  "name": "SkillX",
+  "description": "AI Skill Exchange & Interview Intelligence Platform for modern learners and mentors.",
+  "requestFramePermissions": ["camera", "microphone"]
+}

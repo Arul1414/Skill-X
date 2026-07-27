@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Connectivity Test Path
+    match /test/connection {
+      allow read: if true;
+    }
+
+    // Allow user profile access
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isOwner(userId);
+      allow delete: if isOwner(userId);
+    }
+
+    // Allow interview logs and practice sessions for authenticated users
+    match /interviews/{interviewId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Allow mentorship sessions
+    match /sessions/{sessionId} {
+      allow read, write: if isAuthenticated();
+    }
+
+    // Fallback for any other user-specific collection
+    match /{document=**} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}
+

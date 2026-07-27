@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string" },
+        "company": { "type": "string" },
+        "location": { "type": "string" },
+        "about": { "type": "string" },
+        "skills": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Interview": {
+      "title": "Interview",
+      "description": "Interview session data",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "role": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "questions": { "type": "array" },
+        "answers": { "type": "array" },
+        "violations": { "type": "array" },
+        "feedback": { "type": "object" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "role", "timestamp"]
+    },
+    "Session": {
+      "title": "Session",
+      "description": "Mentorship session booking",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "mentorId": { "type": "string" },
+        "mentorName": { "type": "string" },
+        "skill": { "type": "string" },
+        "price": { "type": "number" },
+        "status": { "type": "string" },
+        "time": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "mentorId", "status", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/interviews/{interviewId}": {
+      "schema": "Interview",
+      "description": "Interview session records"
+    },
+    "/sessions/{sessionId}": {
+      "schema": "Session",
+      "description": "Mentorship session bookings"
+    }
+  }
+}
